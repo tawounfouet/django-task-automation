@@ -8,3 +8,6 @@ class Command(BaseCommand):
         # we write the logic
         # testing git
         self.stdout.write('Hello World')
+
+
+# python manage.py helloworld

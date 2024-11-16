@@ -13,4 +13,8 @@ class Command(BaseCommand):
         # write the logic
         name = kwargs['name']
         greeting = f'Hi {name}, Good Morning!'
+        #self.stdout.write(greeting)
+        #self.stderr.write(greeting)
         self.stdout.write(self.style.SUCCESS(greeting))
+
+# python manage.py greeting

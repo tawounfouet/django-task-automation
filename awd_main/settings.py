@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'emails',
-    'ckeditor',
+    #'ckeditor',
     "anymail",
     "image_compression",
     "stockanalysis",
@@ -184,3 +184,24 @@ ANYMAIL = {
 
 CSRF_TRUSTED_ORIGINS = ['https://faff-114-79-178-247.ngrok-free.app']
 BASE_URL = 'https://faff-114-79-178-247.ngrok-free.app'
+
+
+
+#import warnings
+#from django.utils.deprecation import RemovedInDjango60Warning
+
+# warnings.filterwarnings(
+#     "ignore",
+#     message=r"django-ckeditor bundles CKEditor 4.*",
+#     category=RuntimeWarning,
+# )
+
+# from django.core.checks import register, Warning
+
+# # Define your custom warning suppression function
+# @register()
+# def suppress_ckeditor_warning(app_configs, **kwargs):
+#     return []
+
+# # Disable the CKEditor W001 warning
+# DISABLED_CHECKS = ['ckeditor.W001']
