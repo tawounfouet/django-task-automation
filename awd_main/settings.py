@@ -21,13 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = config('SECRET_KEY')
-SECRET_KEY = "dadad"
+SECRET_KEY = config('SECRET_KEY')
+#SECRET_KEY = "dadad"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = config('DEBUG', default=False, cast=bool) # True or False
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool) # True or False
+#DEBUG = True
 
 
 ALLOWED_HOSTS = ['*']
@@ -36,6 +36,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'dal',
     'dal_select2',
     "django.contrib.admin",
@@ -44,6 +46,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    'django_celery_beat',
+    'django_celery_results',
+
+
     "dataentry",
     "uploads",
     'crispy_forms',
@@ -152,16 +159,21 @@ MESSAGE_TAGS = {
     50: "critical",
 }
 
-CELERY_BROKER_URL = 'redis://localhost:6379'
+
 
 # Email Configuration
-# EMAIL_HOST = config('EMAIL_HOST')
-# EMAIL_PORT = config('EMAIL_PORT', cast=int)
-# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-# EMAIL_USE_TLS=True
-DEFAULT_FROM_EMAIL = 'Automate with Django <developer.rathan@gmail.com>'
-DEFAULT_TO_EMAIL = 'rathan.kumar492@gmail.com'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS=False
+
+
+
+
+
+DEFAULT_FROM_EMAIL = 'Django Task Automation <thomas.awounfouet@gmail.com>'
+DEFAULT_TO_EMAIL = 'thomas.awounfouet@gmail.com'
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
@@ -182,26 +194,35 @@ ANYMAIL = {
 }
 
 
-CSRF_TRUSTED_ORIGINS = ['https://faff-114-79-178-247.ngrok-free.app']
-BASE_URL = 'https://faff-114-79-178-247.ngrok-free.app'
+#CSRF_TRUSTED_ORIGINS = ['https://faff-114-79-178-247.ngrok-free.app']
+#BASE_URL = 'https://faff-114-79-178-247.ngrok-free.app'
+
+
+#CELERY_BROKER_URL = 'redis://localhost:6379'
 
 
 
-#import warnings
-#from django.utils.deprecation import RemovedInDjango60Warning
+#REDIS_URL = config("REDIS_URL", default='redis://localhost:6379')
+#REDIS_URL = 'redis://127.0.0.1:6379'
+#REDIS_URL = 'redis://django-task-automation-redis-1:6379'  # or 'redis://redis:6379' if the service is named 'redis'
+#REDIS_URL = 'redis://redis:6379'
 
-# warnings.filterwarnings(
-#     "ignore",
-#     message=r"django-ckeditor bundles CKEditor 4.*",
-#     category=RuntimeWarning,
-# )
+#REDIS_URL = 'redis://redis:6878'
+#CELERY_BROKER_URL = REDIS_URL
 
-# from django.core.checks import register, Warning
+#REDIS_URL = 'redis://django-task-automation-redis-1:6379'
+#CELERY_BROKER_URL = REDIS_URL
 
-# # Define your custom warning suppression function
-# @register()
-# def suppress_ckeditor_warning(app_configs, **kwargs):
-#     return []
+CELERY_BROKER_URL = 'redis://172.18.0.2:6379/0'
 
-# # Disable the CKEditor W001 warning
-# DISABLED_CHECKS = ['ckeditor.W001']
+
+
+#CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers.DatabaseScheduler"
+
+
+CELERY_BROKER_CONNECTION_RETRY = True
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_REDIS_BACKEND_USE_SSL = False
+CELERY_BROKER_USE_SSL = False

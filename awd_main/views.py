@@ -15,6 +15,13 @@ def celery_test(request):
     return HttpResponse('<h3>Function executed successfully</h3>')
 
 
+
+# def celery_test(request):
+#     # I want to execute a time consuming task here
+#     #celery_test_task.delay()
+#     return HttpResponse('<h3>Function executed successfully</h3>')
+
+
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)

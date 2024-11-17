@@ -5,6 +5,10 @@ from .utils import generate_csv_file, send_email_notification
 from django.conf import settings
 
 
+# @app.task
+# def celery_test_task():
+#     time.sleep(5) # simulation of any task that's going to take 10 seconds
+#     return "Task Executed Successfull"
 
 @app.task
 def celery_test_task():
