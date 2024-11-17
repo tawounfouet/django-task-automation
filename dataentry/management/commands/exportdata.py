@@ -31,7 +31,9 @@ class Command(BaseCommand):
         data = model.objects.all()
 
         # generate csv file path
-        file_path = generate_csv_file(model_name)
+        #file_path = generate_csv_file(model_name)
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        file_path = f'exported_{model_name}_data_{timestamp}.csv'
 
         # open the csv file and write the data
         with open(file_path, 'w', newline='') as file:
@@ -46,3 +48,6 @@ class Command(BaseCommand):
                 writer.writerow([getattr(dt, field.name) for field in model._meta.fields])
         
         self.stdout.write(self.style.SUCCESS('Data exported successfully!'))
+
+
+# python manage.py exportdata student

@@ -19,7 +19,6 @@ class Command(BaseCommand):
         file_path = kwargs['file_path']
         model_name = kwargs['model_name'].capitalize()
 
-        # Search for the model
         model = check_csv_errors(file_path, model_name)
         
         with open(file_path, 'r') as file:
@@ -27,8 +26,8 @@ class Command(BaseCommand):
             # print(reader)
             for row in reader:
                 # print(row)
-                Student.objects.create(**row)
-                #model.objects.create(**row)
+                #Student.objects.create(**row)
+                model.objects.create(**row)
         self.stdout.write(self.style.SUCCESS('Data imported from CSV successfully!'))
 
 # python manage.py importdata
