@@ -7,6 +7,11 @@ class Command(BaseCommand):
     help = 'It will insert data to the database'
 
     def handle(self, *args, **kwargs):
+
+        # add 1 data
+        # Student.objects.create(roll_no=1010, name="Thomas", age=29)
+        # self.stdout.write(self.style.SUCCESS("Data Inserted Successfully"))
+
         # logic goes here
         dataset = [
             {'roll_no': 1002, 'name': 'Sachin', 'age':21},
@@ -24,3 +29,7 @@ class Command(BaseCommand):
             else:
                 self.stdout.write(self.style.WARNING(f'Student with roll no {roll_no} already exists!'))
         self.stdout.write(self.style.SUCCESS('Data inserted successfully!'))
+
+
+
+# python manage.py insertdata
