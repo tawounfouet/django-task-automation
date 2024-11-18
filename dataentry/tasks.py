@@ -12,10 +12,12 @@ from django.core.mail import EmailMessage
 #     time.sleep(5) # simulation of any task that's going to take 10 seconds
 #     return "Task Executed Successfull"
 
-def send_email_notification(mail_subject, message, to_email):
+def send_email_notification(mail_subject, message, to_email, attachement=None):
     try:
         from_email = settings.DEFAULT_FROM_EMAIL
         mail = EmailMessage(mail_subject, message, from_email, to=[to_email])
+        if attachement is not None:
+            mail.attach_file(attachement)
         mail.send()
     except Exception as e:
         raise e
@@ -44,11 +46,11 @@ def import_data_task(file_path, model_name):
     mail_subject = 'Import Data Completed'
     message = 'Your data import has been successful'
     to_email = settings.DEFAULT_TO_EMAIL
-    send_email_notification(mail_subject, message, [to_email])
+    #send_email_notification(mail_subject, message, [to_email])
     
-    # from_email = settings.DEFAULT_FROM_EMAIL
-    # mail = EmailMessage(mail_subject, message, from_email, to=[to_email])
-    # mail.send()
+    from_email = settings.DEFAULT_FROM_EMAIL
+    mail = EmailMessage(mail_subject, message, from_email, to=[to_email])
+    mail.send()
 
     return 'Data imported successfully.'
 
@@ -67,13 +69,14 @@ def export_data_task(model_name):
     message = 'Export data successful. Please find the attachment'
     to_email = settings.DEFAULT_TO_EMAIL
 
-    #send_email_notification(mail_subject, message, [to_email], attachment=file_path)
+    send_email_notification(mail_subject, message, [to_email], attachment=file_path)
     #send_email_notification(mail_subject, message, [to_email])
 
     
     #EmailMessage(mail_subject, message, [to_email], attachment=file_path)
-    from_email = settings.DEFAULT_FROM_EMAIL
-    mail = EmailMessage(mail_subject, message, from_email, to=[to_email])
-    mail.send()
+    # from_email = settings.DEFAULT_FROM_EMAIL
+    # mail = EmailMessage(mail_subject, message, from_email, to=[to_email])
+    # mail.attach_file(file_path)
+    # mail.send()
  
     return 'Export Data task executed successfully.'
